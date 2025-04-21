@@ -1,0 +1,40 @@
+#Import all the necessary libraries
+import matplotlib
+matplotlib.use('Agg')  # Use Agg backend to avoid Tkinter issues
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sns
+#from sklearn.datasets import fetch_california_housing
+
+# Load the California Housing Dataset
+#housing = fetch_california_housing(as_frame=True)
+#df = housing.frame
+
+# Read the CSV file into a DataFrame
+df = pd.read_csv(r"E:\Machine_learning_lab\housing.csv")
+
+# Create Histograms for All Numerical Features
+df.hist(bins=30, figsize=(15, 10))
+plt.suptitle("Histograms of California Housing Features",y=1.02)
+#plt.show()
+plt.savefig("histograms.jpeg")  # Save the figure
+plt.close()
+
+# Alternatively, using seaborn for individual histograms:
+for col in df.columns:
+    plt.figure(figsize=(6, 4))
+    sns.histplot(df[col], kde=True, bins=30)
+    plt.title(f'Histogram of {col}')
+    plt.xlabel(col)
+    plt.ylabel('Frequency')
+    plt.savefig(f"histogram_{col}.png")  # Save each plot
+    plt.close()
+
+# Create a Combined Boxplot for All Features
+plt.figure(figsize=(12, 8))
+sns.boxplot(data=df)
+plt.title("Boxplot of California Housing Features")
+plt.xlabel("Features")
+plt.ylabel("Value")
+plt.savefig("boxplot.jpeg")
+plt.close()
