@@ -1,0 +1,27 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import accuracy_score
+
+# Load the data from the uploaded CSV files
+X = pd.read_csv(r"E:\Machine_learning_lab\olivetti_X.csv", header=None)
+y = pd.read_csv(r"E:\Machine_learning_lab\olivetti_y.csv", header=None)
+
+# Flatten target variable to 1D array
+y = y.values.ravel()
+
+# Split the dataset into training and test sets (80% train, 20% test)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the Naive Bayes classifier (GaussianNB is suitable for continuous features)
+nb_classifier = GaussianNB()
+
+# Train the classifier
+nb_classifier.fit(X_train, y_train)
+
+# Make predictions on the test data
+y_pred = nb_classifier.predict(X_test)
+
+# Compute the accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(accuracy)
